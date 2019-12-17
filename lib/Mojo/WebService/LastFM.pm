@@ -57,6 +57,8 @@ sub nowplaying
         my $artist = $track->{'artist'}{'#text'};
         my $title = $track->{'name'};
         my $album = $track->{'album'}{'#text'};
+
+	my $nowplaying = (defined $track->{'@attr'}{'nowplaying'} and $track->{'@attr'}{'nowplaying'} eq 'true') ? 'true' : 'false';
         
         if ( defined $artist and defined $album and defined $title )
         {
@@ -66,6 +68,7 @@ sub nowplaying
                 $format =~ s/%artist%/$artist/g;
                 $format =~ s/%album%/$album/g;
                 $format =~ s/%title%/$title/g;
+		$format =~ s/%nowplaying%/$nowplaying/g;
     
                 $np = $format;
             }
@@ -78,6 +81,7 @@ sub nowplaying
                     'title'  => $title,
                     'date'   => $track->{'date'},
                     'image'  => $track->{'image'},
+		    'nowplaying' => $nowplaying,
                 };
             }
         }
